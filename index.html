@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Автоматизация Word документов | Лабораторная работа</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="student-info">
+                <h1><i class="fas fa-file-word"></i> Автоматизация Word документов</h1>
+                <div class="info-card">
+                    <div class="info-item">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>ФИО: <strong>Штомпель Дарья Романовна</strong></span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Год: <strong>2025</strong></span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-book"></i>
+                        <span>Курс: <strong>4</strong></span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-users"></i>
+                        <span>Группа: <strong>4</strong></span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <!-- Левая колонка - Форма ввода -->
+            <section class="form-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-edit"></i> Ввод данных договора</h2>
+                    <p class="section-subtitle">Заполните поля для автоматического создания документа</p>
+                </div>
+
+                <!-- Загрузка шаблона -->
+                <div class="form-group file-upload">
+                    <label for="templateUpload">
+                        <i class="fas fa-file-upload"></i> Выберите шаблон Word (.dotx/.docx)
+                    </label>
+                    <input type="file" id="templateUpload" accept=".dotx,.docx">
+                    <div class="file-info" id="fileInfo">
+                        <i class="fas fa-file-alt"></i> Файл не выбран
+                    </div>
+                </div>
+
+                <!-- Основные поля формы -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="contractNumber"><i class="fas fa-hashtag"></i> Номер договора</label>
+                        <input type="text" id="contractNumber" placeholder="Д-001/2024">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="city"><i class="fas fa-city"></i> Город</label>
+                        <input type="text" id="city" placeholder="г. Москва">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contractDate"><i class="fas fa-calendar"></i> Дата договора</label>
+                        <input type="date" id="contractDate" value="2024-03-15">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="clientName"><i class="fas fa-building"></i> Наименование клиента</label>
+                        <input type="text" id="clientName" placeholder="ООО 'Ромашка'">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="clientFio"><i class="fas fa-user-tie"></i> ФИО клиента</label>
+                        <input type="text" id="clientFio" placeholder="Петров Петр Петрович">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="executorName"><i class="fas fa-briefcase"></i> Наименование исполнителя</label>
+                        <input type="text" id="executorName" placeholder="ИП 'Сервис Плюс'">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="executorFio"><i class="fas fa-user-cog"></i> ФИО исполнителя</label>
+                        <input type="text" id="executorFio" placeholder="Сидоров Сидор Сидорович">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="numOfDays"><i class="fas fa-clock"></i> Срок выполнения (дней)</label>
+                        <input type="number" id="numOfDays" value="30" min="1" max="365">
+                    </div>
+                </div>
+
+                <!-- Блок кнопок -->
+                <div class="action-buttons">
+                    <button id="generateRandomData" class="btn btn-secondary">
+                        <i class="fas fa-random"></i> Заполнить случайными данными
+                    </button>
+                    <button id="clearForm" class="btn btn-outline">
+                        <i class="fas fa-trash-alt"></i> Очистить форму
+                    </button>
+                </div>
+            </section>
+
+            <!-- Правая колонка - Таблица и управление -->
+            <section class="table-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-table"></i> Таблица данных</h2>
+                    <div class="table-controls">
+                        <div class="form-group small">
+                            <label for="rowCount"><i class="fas fa-list-ol"></i> Количество строк:</label>
+                            <input type="number" id="rowCount" value="5" min="1" max="100">
+                        </div>
+                        <button id="generateTable" class="btn btn-primary">
+                            <i class="fas fa-sync-alt"></i> Сгенерировать таблицу
+                        </button>
+                        <div class="sort-controls">
+                            <button id="sortAsc" class="btn-icon" title="Сортировка по возрастанию">
+                                <i class="fas fa-sort-amount-up"></i>
+                            </button>
+                            <button id="sortDesc" class="btn-icon" title="Сортировка по убыванию">
+                                <i class="fas fa-sort-amount-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Таблица -->
+                <div class="table-container">
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th data-sort="string" data-column="0" data-type="text">
+                                    Наименование услуги
+                                    <i class="fas fa-sort"></i>
+                                </th>
+                                <th data-sort="date" data-column="1" data-type="date">
+                                    Дата выполнения
+                                    <i class="fas fa-sort"></i>
+                                </th>
+                                <th data-sort="number" data-column="2" data-type="number">
+                                    Количество
+                                    <i class="fas fa-sort"></i>
+                                </th>
+                                <th data-sort="number" data-column="3" data-type="number">
+                                    Стоимость за единицу
+                                    <i class="fas fa-sort"></i>
+                                </th>
+                                <th data-sort="number" data-column="4" data-type="number">
+                                    Сумма
+                                    <i class="fas fa-sort"></i>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Данные таблицы будут сгенерированы здесь -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Блок генерации документов -->
+                <div class="document-actions">
+                    <div class="section-header">
+                        <h2><i class="fas fa-file-export"></i> Генерация документов</h2>
+                    </div>
+                    
+                    <div class="action-grid">
+                        <button id="generateDoc" class="btn-action">
+                            <div class="btn-icon-large">
+                                <i class="fas fa-file-word"></i>
+                            </div>
+                            <div class="btn-text">
+                                <strong>Создать документ</strong>
+                                <small>С данными из формы</small>
+                            </div>
+                        </button>
+                        
+                        <button id="generateLarge" class="btn-action">
+                            <div class="btn-icon-large">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="btn-text">
+                                <strong>10,000 строк</strong>
+                                <small>Оптимизированная генерация</small>
+                            </div>
+                        </button>
+                        
+                        <button id="applyLandscape" class="btn-action">
+                            <div class="btn-icon-large">
+                                <i class="fas fa-rotate-right"></i>
+                            </div>
+                            <div class="btn-text">
+                                <strong>Альбомная</strong>
+                                <small>Повернуть страницу</small>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Результаты -->
+                <div class="results-section" id="resultsSection" style="display: none;">
+                    <div class="section-header">
+                        <h2><i class="fas fa-download"></i> Результаты</h2>
+                    </div>
+                    <div class="results-container" id="resultsContainer">
+                        <!-- Здесь появятся ссылки на файлы -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Футер -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="tech-stack">
+                    <span>Технологии:</span>
+                    <i class="fab fa-html5" title="HTML5"></i>
+                    <i class="fab fa-css3-alt" title="CSS3"></i>
+                    <i class="fab fa-js" title="JavaScript"></i>
+                    <i class="fab fa-node-js" title="Node.js"></i>
+                </div>
+                <div class="lab-info">
+                    <span>Лабораторная работа "Автоматизация взаимодействия с документами Microsoft Office"</span>
+                </div>
+                <div class="status-indicator">
+                    <i class="fas fa-circle" id="statusIndicator"></i>
+                    <span id="statusText">Сервер не запущен</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Модальное окно загрузки -->
+    <div id="loadingModal" class="modal">
+        <div class="modal-content">
+            <div class="spinner"></div>
+            <h3>Генерация документа</h3>
+            <p id="loadingMessage">Пожалуйста, подождите...</p>
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
